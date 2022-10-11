@@ -6,52 +6,39 @@
     <?php 
 
   function calendario($mes,$anio){
- 
+ //echo  date("l", mktime(0, 0, 0, 10, 11, 2022));
     $calendario = "<table>";
-      $arraSemanas= array('L','M','M','J','V','S','D');
- 
+    $arraSemanas= array('L','M','M','J','V','S','D');
     $calendario.= '<tr><td>'.implode('</td><td>',$arraSemanas).'</td></tr>';
     $diaSemana= date('w',mktime(0,0,0,$mes,1,$anio));
     $diaSemana = ($diaSemana > 0) ? $diaSemana-1 : $diaSemana;
     $diasMes = date('t',mktime(0,0,0,$mes,1,$anio));
     $numSemana = 1;
     $countDias = 0;
-    $fechaD = array();
- 
-    $calendario.= "<tr>";
- 
-    for($x = 0; $x < $diaSemana; $x++){
+    
+    for($i = 0; $i < $diaSemana; $i++){
       $calendario.= '<td> </td>';
         $numSemana++;
     }
         
- 
-    for($list_day = 1; $list_day <= $diasMes; $list_day++){
-        $calendario.= '<td class="calendar-day">';
-         
-        $class="day-number ";
-        if($diaSemana == 0 || $diaSemana == 6 ){
-            $class.=" not-work ";
-        }
-         
-       
-            $calendario.= "<div class='{$class}'>".$list_day."</div>";
-             
+    for($list_dia = 1; $list_dia <= $diasMes; $list_dia++){
+        $calendario.= '<td>';
+        $calendario.= "<div>".$list_dia."</div>";
         $calendario.= '</td>';
         if($diaSemana == 6){
             $calendario.= '</tr>';
             if(($countDias+1) != $diasMes){
-                $calendario.= '<tr class="calendar-row">';
+                $calendario.= '<tr>';
             }
             $diaSemana = -1;
             $numSemana = 0;
           }
-        $days_in_this_week++; $diaSemana++; $countDias++;
+        $numSemana++; $diaSemana++; $countDias++;
       }
  
     if($numSemana < 8){
         for($x = 1; $x <= (8 - $numSemana); $x++){
-            $calendar.= '<td class="calendar-day-np"> </td>';
+            $calendar.= '<td> </td>';
           }
 }
  
@@ -59,9 +46,8 @@
     $calendario.= '</table>';
     return $calendario;
 }
- 
-// Le pasamos el mes, el año y el idioma
-echo calendario(2,2022);
+
+echo calendario(7,2022);
 
 
 
